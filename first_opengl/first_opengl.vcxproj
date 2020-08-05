@@ -153,6 +153,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="images\container.jpg" />
+    <Image Include="images\container2.jpg" />
+    <Image Include="images\container3.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\3\myp\opengl\first_opengl\first_opengl\shaders\fs.glsl" />

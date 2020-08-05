@@ -27,6 +27,9 @@ unsigned int Texture::load_texture(std::string filename) {
 
 			texture_map[filename] = id;
 		}
+		else {
+			printf("texture error\n");
+		}
 		stbi_image_free(data);
 		return id;
 	}
