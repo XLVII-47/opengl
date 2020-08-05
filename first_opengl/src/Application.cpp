@@ -222,7 +222,7 @@ int main(int argc, char** argv)
 		// get matrix's uniform location and set matrix
 		program.use();//kullanılacak shader
 
-		program.setmat4("model", &transform);
+		//program.setmat4("model", &transform);
 		program.setmat4("view", &cam);
 		program.setmat4("projection", &proj);
 
@@ -230,17 +230,31 @@ int main(int argc, char** argv)
 		program.setvec3("light.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
 		program.setvec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
 		program.setvec3("light.position", lightPos);
+		program.setFloat("light.constant", 1.0f);
+		program.setFloat("light.linear", 0.09f);
+		program.setFloat("light.quadratic", 0.032f);
 		// material properties
 	
-		program.setvec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f)); // specular lighting doesn't have full effect on this object's material
+		//program.setvec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f)); // specular lighting doesn't have full effect on this object's material
 		program.setFloat("material.shininess", 64.0f);
 
 		program.setvec3("viewPos", camera.Position);
 		textures.activatetexture(GL_TEXTURE0, diffuseMap);
 		textures.activatetexture(GL_TEXTURE1, specularMap);
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		for (unsigned int i = 0; i < 8; i++)
+		{
+			// calculate the model matrix for each object and pass it to shader before drawing
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, init[i]);
+			float angle = 20.0f * i;
+			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+			program.setmat4("model", &model);
 
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
+
+		
 		transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 		float x = lightPos.x;
 		float z = lightPos.z;
@@ -255,7 +269,7 @@ int main(int argc, char** argv)
 
 		glBindVertexArray(lightVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-
+		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
