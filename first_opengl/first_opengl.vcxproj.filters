@@ -32,9 +32,6 @@
     <Image Include="images\container.jpg">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="images\hazal.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\3\myp\opengl\first_opengl\first_opengl\shaders\fs.glsl" />
